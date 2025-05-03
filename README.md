@@ -8,14 +8,16 @@ The [ConsoleWindow.cs](https://github.com/SlushyRH/Unity-CMD-Console/blob/main/C
 > This script only works on Windows OS and only works in builds, not the editor. However, you can attach the script to any GameObject, and it will only show when it's in a Windows build.
 
 # How To Use
-Simply create a new root GameObject called `Console Window` and drag the `ConsoleWindow.cs` script onto it! But be careful since the `ConsoleWindow.cs` is marked as DontDestroyOnLoad. You can then adjust the settings as you like, and then simply go on with your game development journey. The console will automatically show logs and will only appear when you open a Windows build that matches the [build limit](https://github.com/SlushyRH/Unity-CMD-Console/tree/main?tab=readme-ov-file#Settings).
+Simply create a new root GameObject called `Console Window` and drag the `ConsoleWindow.cs` script onto it! But be careful since the `ConsoleWindow.cs` is marked as DontDestroyOnLoad. You can then adjust the settings as you like, and then simply go on with your game development journey. You can access the settings through the instance by calling `ConsoleWindow.Instance.`
+
+The console will automatically show logs and will only appear when you open a Windows build that matches the [Target Build](https://github.com/SlushyRH/Unity-CMD-Console/tree/main?tab=readme-ov-file#Settings).
 
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/console.png" align="center">
 
 ## Settings
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/inspector.png" align="center">
 
-- **Build Limit** controls when the console is allowed based on the type of build:
+- **Target Build** controls when the console is allowed based on the type of build:
     - **None** means it will never show
     - **Development** means it will only show on development builds
     - **Standard** means it will only show on standard builds

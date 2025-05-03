@@ -3,14 +3,14 @@ using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace SRH.MSS.Tests.Utility
+namespace SRH.Utility
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("SRH/Utility/Console Window")]
     public class ConsoleWindow : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private ConsoleBuildLimit buildLimit = ConsoleBuildLimit.Development;
+        [SerializeField] private TargetConsoleBuild targetBuild = TargetConsoleBuild.Development;
         [SerializeField] private bool includeLogType = false;
         [SerializeField] private bool includeTimestamp = true;
 
@@ -219,9 +219,9 @@ namespace SRH.MSS.Tests.Utility
         private bool IsBuildAllowed()
         {
 #if DEVELOPMENT_BUILD
-            return buildLimit.HasFlag(ConsoleBuildLimit.Development);
+            return targetBuild.HasFlag(TargetConsoleBuild.Development);
 #else
-            return buildLimit.HasFlag(ConsoleBuildLimit.Standard);
+            return targetBuild.HasFlag(TargetConsoleBuild.Standard);
 #endif
         }
 
@@ -256,7 +256,7 @@ namespace SRH.MSS.Tests.Utility
     }
 
     [Flags]
-    public enum ConsoleBuildLimit
+    public enum TargetConsoleBuild
     {
         None = 0,
         Development = 1 << 0,
