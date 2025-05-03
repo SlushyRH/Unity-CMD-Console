@@ -13,7 +13,7 @@ Simply create a new root GameObject called `Console Window` and drag the `Consol
 The console will automatically show logs and will only appear when you open a Windows build that matches the [Target Build](https://github.com/SlushyRH/Unity-CMD-Console/tree/main?tab=readme-ov-file#Settings).
 
 > [!NOTE]
-> If you quit the game then the console will automatically close as well, and if you close the console, the game will close as well since they are linked. Hence why the script is marked as DontDestroyOnLoad so it will persist across scenes and not quit the game. The console will only be created when the scene with the object is opened but I highly recommend to make it open in the first scene of the game.
+> If you quit the game then the console will automatically close as well, and if you close the console, the game will close as well since they are linked. Hence why the script is marked as DontDestroyOnLoad so it will persist across scenes and not quit the game. The console will only be created when the scene with the object is loaded so I highly recommend to place the ConsoleWindow in the first scene of the game.
 
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/console.png" align="center">
 
