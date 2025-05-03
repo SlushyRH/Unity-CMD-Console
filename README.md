@@ -8,7 +8,7 @@
 > The console will only open if the game is a Windows OS build. If it is not, then the console simply won't show, but your game will run as normal.
 
 # How To Use
-Simply create a new root GameObject called `Console Window` and drag the `ConsoleWindow.cs` script onto it! But be careful since the `ConsoleWindow.cs` is marked as DontDestroyOnLoad. You can then adjust the settings as you like, and then simply go on with your game development journey. You can access the settings through the instance by calling `ConsoleWindow.Instance.`
+Simply create a new root GameObject called `Console Window` and drag the `ConsoleWindow.cs` script onto it! You can then adjust the settings as you like, and then simply go on with your game development journey. You can access the settings through the instance by calling `ConsoleWindow.Instance.`
 
 The console will automatically show logs and will only appear when you open a Windows build that matches the [Target Build](https://github.com/SlushyRH/Unity-CMD-Console/tree/main?tab=readme-ov-file#Settings).
 
