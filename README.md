@@ -2,15 +2,18 @@
 
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/showcase.gif" align="center">
 
-The [ConsoleWindow.cs](https://github.com/SlushyRH/Unity-CMD-Console/blob/main/ConsoleWindow.cs) script is a simple MonoBehaviour which will initialize a CMD window that shows all logs from Unity's Debug class. This is useful for people trying to debug their code in a build, and especially useful for people who have more than 1 monitor as the CMD console is an external window meaning it can be dragged across monitors.
+[ConsoleWindow.cs](https://github.com/SlushyRH/Unity-CMD-Console/blob/main/ConsoleWindow.cs) is a simple MonoBehaviour which will initialize a CMD window that shows all logs from Unity's Debug class. This is useful for people trying to debug their code in a build, and especially useful for people who have more than 1 monitor as the CMD console is an external window meaning it can be dragged across monitors.
 
 > [!WARNING]
-> This script only works on Windows OS and only works in builds, not the editor. However, you can attach the script to any GameObject, and it will only show when it's in a Windows build.
+> This script only works on Windows OS and only works in builds, not the editor. However, you can leave the script in the scene as it will only execute if it's a Windows OS build.
 
 # How To Use
 Simply create a new root GameObject called `Console Window` and drag the `ConsoleWindow.cs` script onto it! But be careful since the `ConsoleWindow.cs` is marked as DontDestroyOnLoad. You can then adjust the settings as you like, and then simply go on with your game development journey. You can access the settings through the instance by calling `ConsoleWindow.Instance.`
 
 The console will automatically show logs and will only appear when you open a Windows build that matches the [Target Build](https://github.com/SlushyRH/Unity-CMD-Console/tree/main?tab=readme-ov-file#Settings).
+
+> [!INFO]
+> If you quit the game then the console will automatically close as well, and if you close the console, the game will close as well since they are linked. Hence why the script is marked as DontDestroyOnLoad so it will persist across scenes and not quit the game. The console will only be created when the scene with the object is opened but I highly recommend to make it open in the first scene of the game.
 
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/console.png" align="center">
 
