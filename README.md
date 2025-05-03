@@ -2,7 +2,7 @@
 
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/showcase.gif" align="center">
 
-The `ConsoleWindow.cs` script is a simple MonoBehaviour which will initialize a CMD window that shows all logs from Unity's Debug class. This is useful for people trying to debug their code in a build, and especially useful for people who have more than 1 monitor as the CMD console is an external window meaning it can be dragged across monitors.
+The [ConsoleWindow.cs](https://github.com/SlushyRH/Unity-CMD-Console/blob/main/ConsoleWindow.cs) script is a simple MonoBehaviour which will initialize a CMD window that shows all logs from Unity's Debug class. This is useful for people trying to debug their code in a build, and especially useful for people who have more than 1 monitor as the CMD console is an external window meaning it can be dragged across monitors.
 
 > [!WARNING]
 > This script only works on Windows OS and only works in builds, not the editor. However, you can attach the script to any GameObject, and it will only show when it's in a Windows build.
