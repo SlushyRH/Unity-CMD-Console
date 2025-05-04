@@ -10,10 +10,12 @@
 # How To Use
 Simply create a new root GameObject called `Console Window` and drag the `ConsoleWindow.cs` script onto it! You can then adjust the settings as you like, and then simply go on with your game development journey. You can access the settings through the instance by calling `ConsoleWindow.Instance.`
 
+The `Console Window` GameObject will be marked as DontDestroyOnLoad so it's best to to place the GameObject in the first scene of the game so it persists across all scenes. If the GameObject is in multiple scenes then only one instance of it will stay alive so no need worry about duplicates.
+
 The console will automatically show logs and will only appear when you open a Windows build that matches the [Target Build](https://github.com/SlushyRH/Unity-CMD-Console/tree/main?tab=readme-ov-file#Settings).
 
 > [!NOTE]
-> If you quit the game then the console will automatically close as well, and if you close the console, the game will close as well since they are linked. Hence why the script is marked as DontDestroyOnLoad so it will persist across scenes and not quit the game. The console will only be created when the scene with the object is loaded so I highly recommend to place the ConsoleWindow in the first scene of the game.
+> Since the game window and the console are linked, if you close one, then it will close the other.
 
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/console.png" align="center">
 
