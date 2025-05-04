@@ -24,7 +24,7 @@ The console will automatically show logs and will only appear when you open a Wi
 
 - **Target Build** controls when the console is allowed based on the type of build:
     - **None** means it will never show
-    - **Development** means it will only show on development builds
+    - **Development** means it will only show on development builds (This is the default)
     - **Standard** means it will only show on standard builds
     - **Everything** means it will show in both development and standard builds
 - **Include Log Type** will add the log type in front of the message:
