@@ -13,7 +13,7 @@ namespace SRH.Utility
         [Header("Settings")]
         [SerializeField] private string consoleWindowName = "Console Debugger";
         [SerializeField] private TargetConsoleBuild targetBuild = TargetConsoleBuild.Development;
-        [SerializeField] private bool showExceptionStackTrace = true;
+        [SerializeField] private ShowStackTrace showStackTrace = ShowStackTrace.Exception;
         [SerializeField] private bool includeLogType = false;
         [SerializeField] private bool includeTimestamp = true;
 
@@ -124,6 +124,8 @@ namespace SRH.Utility
 
         public bool IncludeTimestamp { get => includeTimestamp; set => includeTimestamp = value; }
 
+        public ShowStackTrace ShowStackTrace { get => showStackTrace; set => showStackTrace = value; }
+
         public bool Pause { get; set; } = false;
 
 #if UNITY_STANDALONE_WIN && !UNITY_EDITOR
@@ -204,6 +206,8 @@ namespace SRH.Utility
 
         private void CleanupConsole()
         {
+            Application.logMessageReceived -= HandleLog;
+
             if (writer != null)
             {
                 writer.Flush();
@@ -236,20 +240,48 @@ namespace SRH.Utility
 
             // get original colour
             ConsoleColor ogColor = Console.ForegroundColor;
+            bool showStack = false;
 
             // apply colour based on log type
             if (type == LogType.Log)
+            {
                 Console.ForegroundColor = ccInfoTxtColour;
+
+                if (showStackTrace.HasFlag(ShowStackTrace.Info))
+                    showStack = true;
+            }
             else if (type == LogType.Warning)
+            {
                 Console.ForegroundColor = ccWarningTxtColour;
+
+                if (showStackTrace.HasFlag(ShowStackTrace.Warning))
+                    showStack = true;
+            }
             else if (type == LogType.Error)
+            {
                 Console.ForegroundColor = ccErrorTxtColour;
+
+                if (showStackTrace.HasFlag(ShowStackTrace.Error))
+                    showStack = true;
+            }
             else if (type == LogType.Exception)
+            {
                 Console.ForegroundColor = ccExceptionTxtColour;
+
+                if (showStackTrace.HasFlag(ShowStackTrace.Exception))
+                    showStack = true;
+            }
             else if (type == LogType.Assert)
+            {
                 Console.ForegroundColor = ccAssertTxtColour;
+
+                if (showStackTrace.HasFlag(ShowStackTrace.Assert))
+                    showStack = true;
+            }
             else
+            {
                 Console.ForegroundColor = ogColor;
+            }
 
             // create log type and timestamp if needed
             string logType = includeLogType ? $"[{type.ToString()}] " : "";
@@ -258,7 +290,7 @@ namespace SRH.Utility
             // write to the streamwriter and reset colour
             writer.WriteLine($"{logType}{timestamp}{msg}");
 
-            if (showExceptionStackTrace && !string.IsNullOrEmpty(stackTrace) && type == LogType.Exception)
+            if (showStack && !string.IsNullOrEmpty(stackTrace))
             {
                 Console.ForegroundColor = ccStackTraceTxtColour;
                 writer.WriteLine(stackTrace);
@@ -307,5 +339,16 @@ namespace SRH.Utility
         None = 0,
         Development = 1 << 0,
         Standard = 1 << 1,
+    }
+
+    [Flags]
+    public enum ShowStackTrace
+    {
+        None = 0,
+        Info = 1 << 0,
+        Warning = 1 << 1,
+        Error = 1 << 2,
+        Exception = 1 << 4,
+        Assert = 1 << 8,
     }
 }
