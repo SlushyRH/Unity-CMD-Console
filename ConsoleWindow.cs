@@ -11,6 +11,7 @@ namespace SRH.Utility
     public class ConsoleWindow : MonoBehaviour
     {
         [Header("Settings")]
+        [SerializeField] private string consoleWindowName = "Console Debugger";
         [SerializeField] private TargetConsoleBuild targetBuild = TargetConsoleBuild.Development;
         [SerializeField] private bool showExceptionStackTrace = true;
         [SerializeField] private bool includeLogType = false;
@@ -131,6 +132,9 @@ namespace SRH.Utility
 
         [DllImport("kernel32.dll")]
         private static extern bool FreeConsole();
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern bool SetConsoleTitle(string lpConsoleTitle);
 #endif
 
         public void Awake()
@@ -158,6 +162,9 @@ namespace SRH.Utility
             // allocate new window console
             AllocConsole();
             consoleAllocated = true;
+
+            if (!string.IsNullOrEmpty(consoleWindowName))
+                SetConsoleTitle(consoleWindowName);
 #endif
 
             // create writer and direct output to console

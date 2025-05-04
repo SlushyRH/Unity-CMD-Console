@@ -22,11 +22,13 @@ The console will automatically show logs and will only appear when you open a Wi
 ## Settings
 <img src="https://github.com/SlushyRH/Unity-CMD-Console/blob/main/readme/inspector.png" align="center">
 
+- **Console Window Name** controls the name of the console window. If empty, it will display the path to the game's exe
 - **Target Build** controls when the console is allowed based on the type of build:
     - **None** means it will never show
     - **Development** means it will only show on development builds (This is the default)
     - **Standard** means it will only show on standard builds
     - **Everything** means it will show in both development and standard builds
+- **Show Exception Stack Trace** will add the stack trace from an exception log to the console.
 - **Include Log Type** will add the log type in front of the message:
     - [Info] Log Message Here
     - [Error] Log Message Here
@@ -38,4 +40,4 @@ The console will automatically show logs and will only appear when you open a Wi
     - [16:24:14] Log Message Here
 - **Log Colours** will allow you to control what colour each log appears as in the console.
 <br>
-<p>* If both <b>Include Log Type</b> and <b>Include Timestamp</b> are on. Then the LogType will come first and will be displayed in the console like this: [LogType] [Timestamp] Log Messager Here</p>
+<p>If both <b>Include Log Type</b> and <b>Include Timestamp</b> are on. Then the LogType will come first and will be displayed in the console like this: [LogType] [Timestamp] Log Messager Here</p>
