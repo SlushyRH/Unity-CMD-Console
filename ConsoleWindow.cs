@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -33,6 +34,26 @@ namespace SRH.Utility
 
         private StreamWriter writer;
         private bool consoleAllocated;
+
+        private Dictionary<ConsoleColor, Color32> consoleColours = new Dictionary<ConsoleColor, Color32>()
+        {
+            { ConsoleColor.Black, new Color32(0, 0, 0, 255) },
+            { ConsoleColor.DarkBlue, new Color32(0, 0, 139, 255) },
+            { ConsoleColor.DarkGreen, new Color32(0, 100, 0, 255) },
+            { ConsoleColor.DarkCyan, new Color32(0, 139, 139, 255) },
+            { ConsoleColor.DarkRed, new Color32(139, 0, 0, 255) },
+            { ConsoleColor.DarkMagenta, new Color32(139, 0, 139, 255) },
+            { ConsoleColor.DarkYellow, new Color32(184, 134, 11, 255) },
+            { ConsoleColor.Gray, new Color32(190, 190, 190, 255) },
+            { ConsoleColor.DarkGray, new Color32(105, 105, 105, 255) },
+            { ConsoleColor.Blue, new Color32(0, 0, 255, 255) },
+            { ConsoleColor.Green, new Color32(0, 255, 0, 255) },
+            { ConsoleColor.Cyan, new Color32(0, 255, 255, 255) },
+            { ConsoleColor.Red, new Color32(255, 0, 0, 255) },
+            { ConsoleColor.Magenta, new Color32(255, 0, 255, 255) },
+            { ConsoleColor.Yellow, new Color32(255, 255, 0, 255) },
+            { ConsoleColor.White, new Color32(255, 255, 255, 255) },
+        };
 
         private static ConsoleWindow _instance;
 
@@ -230,7 +251,7 @@ namespace SRH.Utility
             // write to the streamwriter and reset colour
             writer.WriteLine($"{logType}{timestamp}{msg}");
 
-            if (showExceptionStackTrace && !string.IsNullOrEmpty(stackTrace))
+            if (showExceptionStackTrace && !string.IsNullOrEmpty(stackTrace) && type == LogType.Exception)
             {
                 Console.ForegroundColor = ccStackTraceTxtColour;
                 writer.WriteLine(stackTrace);
@@ -252,24 +273,19 @@ namespace SRH.Utility
         private ConsoleColor GetClosestConsoleColour(Color32 colour)
         {
             // init
-            ConsoleColor consoleColour = 0;
-            double delta = double.MaxValue;
+            ConsoleColor consoleColour = ConsoleColor.White;
+            double smallestDist = double.MaxValue;
 
-            foreach (ConsoleColor cc in Enum.GetValues(typeof(ConsoleColor)))
+            foreach (var cc in consoleColours)
             {
-                // get console colour name and actual colour
-                string ccName = Enum.GetName(typeof(ConsoleColor), cc);
-                var ccColour = System.Drawing.Color.FromName(ccName);
+                // calculate distance between colour and target colour
+                double distance = Math.Pow(cc.Value.r - colour.r, 2.0) + Math.Pow(cc.Value.g - colour.g, 2.0) + Math.Pow(cc.Value.b - colour.b, 2.0);
 
-                double tDelta = Math.Pow(ccColour.R - colour.r, 2.0) + Math.Pow(ccColour.G - colour.g, 2.0) + Math.Pow(ccColour.B - colour.b, 2.0);
-
-                if (tDelta == 0)
-                    return consoleColour;
-
-                if (tDelta < delta)
+                // check if distance is smaller than the current smallest distance
+                if (distance < smallestDist)
                 {
-                    delta = tDelta;
-                    consoleColour = cc;
+                    smallestDist = distance;
+                    consoleColour = cc.Key;
                 }
             }
 
