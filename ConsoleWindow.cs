@@ -11,6 +11,7 @@ namespace SRH.Utility
     {
         [Header("Settings")]
         [SerializeField] private TargetConsoleBuild targetBuild = TargetConsoleBuild.Development;
+        [SerializeField] private bool showExceptionStackTrace = true;
         [SerializeField] private bool includeLogType = false;
         [SerializeField] private bool includeTimestamp = true;
 
@@ -20,12 +21,15 @@ namespace SRH.Utility
         [SerializeField] private Color32 errorTxtColour = Color.red;
         [SerializeField] private Color32 exceptionTxtColour = Color.red;
         [SerializeField] private Color32 assertTxtColour = Color.white;
+        [Space]
+        [SerializeField] private Color32 stackTraceTxtColour = Color.red;
 
         private ConsoleColor ccInfoTxtColour;
         private ConsoleColor ccWarningTxtColour;
         private ConsoleColor ccErrorTxtColour;
         private ConsoleColor ccExceptionTxtColour;
         private ConsoleColor ccAssertTxtColour;
+        private ConsoleColor ccStackTraceTxtColour;
 
         private StreamWriter writer;
         private bool consoleAllocated;
@@ -84,6 +88,16 @@ namespace SRH.Utility
             }
         }
 
+        public Color32 StackTraceTxtColour
+        {
+            get => stackTraceTxtColour;
+            set
+            {
+                stackTraceTxtColour = value;
+                ccStackTraceTxtColour = GetClosestConsoleColour(stackTraceTxtColour);
+            }
+        }
+
         public bool IncludeLogType { get => includeLogType; set => includeLogType = value; }
 
         public bool IncludeTimestamp { get => includeTimestamp; set => includeTimestamp = value; }
@@ -138,6 +152,7 @@ namespace SRH.Utility
             ccErrorTxtColour = GetClosestConsoleColour(errorTxtColour);
             ccExceptionTxtColour = GetClosestConsoleColour(exceptionTxtColour);
             ccAssertTxtColour = GetClosestConsoleColour(assertTxtColour);
+            ccStackTraceTxtColour = GetClosestConsoleColour(stackTraceTxtColour);
 
             // listen to log messages
             Application.logMessageReceived += HandleLog;
@@ -214,6 +229,13 @@ namespace SRH.Utility
 
             // write to the streamwriter and reset colour
             writer.WriteLine($"{logType}{timestamp}{msg}");
+
+            if (showExceptionStackTrace && !string.IsNullOrEmpty(stackTrace))
+            {
+                Console.ForegroundColor = ccStackTraceTxtColour;
+                writer.WriteLine(stackTrace);
+            }
+
             Console.ForegroundColor = ogColor;
         }
 
