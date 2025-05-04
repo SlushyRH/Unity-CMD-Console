@@ -109,6 +109,7 @@ namespace SRH.Utility
             else
             {
                 Destroy(this);
+                return;
             }
 
 #if UNITY_EDITOR
